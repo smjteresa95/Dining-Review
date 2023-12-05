@@ -19,10 +19,7 @@ public class RestaurantController {
         if(!service.validateRestaurant(dto)){
             return ResponseEntity.badRequest().body("Invalid restaurant data");
         }
-
-        //DTO를 엔티티로 변환하고 저장 서비스 단에서 메서드
-
+        service.save(dto);
+        return ResponseEntity.ok().build();
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.example.diningreview.model.dto;
 
 import com.example.diningreview.enums.CuisineType;
+import com.example.diningreview.model.entity.Restaurant;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,4 +29,21 @@ public class RestaurantDto {
     private Float eggScore;
     private Float dairyScore;
     private Float overallScore;
+
+    public Restaurant toEntity(){
+        return Restaurant.builder()
+                .name(name)
+                .type(type)
+                .address(address)
+                .city(city)
+                .state(state)
+                .zipCode(zipCode)
+                .phone(phone)
+                .website(website)
+                .peanutScore(peanutScore)
+                .eggScore(eggScore)
+                .dairyScore(dairyScore)
+                .overallScore(overallScore)
+                .build();
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.diningreview.service;
 
 import com.example.diningreview.model.dto.RestaurantDto;
+import com.example.diningreview.model.entity.Restaurant;
 import com.example.diningreview.repository.RestaurantRepository;
 import com.example.diningreview.utils.ValidationUtils;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,10 @@ import org.springframework.stereotype.Service;
 public class RestaurantService {
 
     private final RestaurantRepository repository;
+
+    public void save(RestaurantDto dto){
+        repository.save(dto.toEntity());
+    }
 
     public Boolean validateRestaurant(RestaurantDto dto){
 

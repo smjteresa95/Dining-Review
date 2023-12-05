@@ -2,6 +2,7 @@ package com.example.diningreview.model.entity;
 
 import com.example.diningreview.enums.CuisineType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -10,7 +11,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 @Entity
 @Table(name="RESTAURANT")
 @Getter
-@RequiredArgsConstructor
+@RequiredArgsConstructor @Builder
 public class Restaurant {
 
     @Id
