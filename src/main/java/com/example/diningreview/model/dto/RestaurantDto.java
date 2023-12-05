@@ -43,4 +43,5 @@ public class RestaurantDto {
                 .overallScore(overallScore)
                 .build();
     }
+
 }
