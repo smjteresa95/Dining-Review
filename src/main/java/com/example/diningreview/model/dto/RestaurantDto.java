@@ -2,15 +2,12 @@ package com.example.diningreview.model.dto;
 
 import com.example.diningreview.enums.CuisineType;
 import com.example.diningreview.model.entity.Restaurant;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor @Builder
 public class RestaurantDto {
     private Long id;
 

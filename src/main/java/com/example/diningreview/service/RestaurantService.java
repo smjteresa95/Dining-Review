@@ -1,7 +1,6 @@
 package com.example.diningreview.service;
 
 import com.example.diningreview.model.dto.RestaurantDto;
-import com.example.diningreview.model.entity.Restaurant;
 import com.example.diningreview.repository.RestaurantRepository;
 import com.example.diningreview.utils.ValidationUtils;
 import lombok.RequiredArgsConstructor;

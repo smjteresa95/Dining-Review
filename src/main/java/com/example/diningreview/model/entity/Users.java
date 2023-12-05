@@ -1,15 +1,17 @@
-package com.example.diningreview.model.dto;
+package com.example.diningreview.model.entity;
 
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
+@Entity
+@Table(name = "USERS")
 @Getter
-@Setter
-@RequiredArgsConstructor @Builder
+@RequiredArgsConstructor
+public class Users {
 
-public class UserDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     private String name;

@@ -1,15 +1,12 @@
 package com.example.diningreview.model.dto;
 
 import com.example.diningreview.enums.ReviewStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 @Getter
 @Setter
-@RequiredArgsConstructor @Builder
+@NoArgsConstructor
+@AllArgsConstructor @Builder
 public class ReviewDto {
     private long id;
 

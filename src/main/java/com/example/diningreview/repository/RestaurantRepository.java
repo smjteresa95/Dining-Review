@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Optional<Restaurant> findByNameAndZipCode(String name, String Zipcode);
-    Iterable<Restaurant> findByZipCodeAndPeanutScoreOrderByPeanutScore(Long id);
-    Iterable<Restaurant> findByZipCodeAndDairyScoreOrderByDairyScore(Long id);
-    Iterable<Restaurant> findByZipCodeAndEggScoreOrderByEggScore(Long id);
+    Iterable<Restaurant> findByZipCodeAndPeanutScoreOrderByPeanutScore(String zipCode, Float peanutScore);
+    Iterable<Restaurant> findByZipCodeAndDairyScoreOrderByDairyScore(String zipCode, Float dairyScore);
+    Iterable<Restaurant> findByZipCodeAndEggScoreOrderByEggScore(String zipCode, Float eggScore);
 }
