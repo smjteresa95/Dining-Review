@@ -20,11 +20,11 @@ public class ValidationUtils {
 
     //알러지 점수 범위 유효성 검사
     public static boolean isValidateScore(Float score, String fieldName){
-        if(score ==null){
+        if(score == null){
             LOGGER.error("{} is null", fieldName);
             return false;
         }
-        if(score < 0 || score >5){
+        if(score < 0 || score > 5){
             LOGGER.error("{} is out of range. Must between 0 to 5", fieldName);
             return false;
         }

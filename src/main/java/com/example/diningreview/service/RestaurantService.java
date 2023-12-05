@@ -19,36 +19,33 @@ public class RestaurantService {
     public Boolean validateRestaurant(RestaurantDto dto){
 
         //필수 필드 검증
-        if(ValidationUtils.isNull(dto.getName(), "restaurant name")){
+        if (ValidationUtils.isNull(dto.getName(), "restaurant name")) {
             return false;
         }
-        if(ValidationUtils.isNull(dto.getType(), "restaurant type")){
+        if (ValidationUtils.isNull(dto.getType(), "restaurant type")) {
             return false;
         }
-        if(ValidationUtils.isNull(dto.getAddress(), "street address")){
+        if (ValidationUtils.isNull(dto.getAddress(), "street address")) {
             return false;
         }
-        if(ValidationUtils.isNull(dto.getCity(), "city")){
+        if (ValidationUtils.isNull(dto.getCity(), "city")) {
             return false;
         }
-        if(ValidationUtils.isNull(dto.getName(), "zipcode")){
+        if (ValidationUtils.isNull(dto.getZipCode(), "zipcode")) {
             return false;
         }
-        if(ValidationUtils.isNull(dto.getName(), "status")){
-            return false;
-        }
-        if(ValidationUtils.isNull(dto.getName(), "restaurant phone number")){
+        if (ValidationUtils.isNull(dto.getPhone(), "restaurant phone number")) {
             return false;
         }
 
 
-        if(ValidationUtils.isValidateScore(dto.getDairyScore(), "dairy score")){
+        if (!ValidationUtils.isValidateScore(dto.getDairyScore(), "dairy score")) {
             return false;
         }
-        if(ValidationUtils.isValidateScore(dto.getEggScore(), "egg score")){
+        if (!ValidationUtils.isValidateScore(dto.getEggScore(), "egg score")) {
             return false;
         }
-        if(ValidationUtils.isValidateScore(dto.getPeanutScore(), "peanut score")){
+        if (!ValidationUtils.isValidateScore(dto.getPeanutScore(), "peanut score")) {
             return false;
         }
 
