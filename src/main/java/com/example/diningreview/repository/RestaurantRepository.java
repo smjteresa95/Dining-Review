@@ -12,7 +12,14 @@ import java.util.Optional;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Optional<Restaurant> findByNameAndZipCode(String name, String Zipcode);
     Page<Restaurant> findAll(Pageable pageable);
-    Page<Restaurant> findByZipCodeAndPeanutScoreOrderByPeanutScore(String zipCode, Float peanutScore, Pageable pageable);
-    Page<Restaurant> findByZipCodeAndDairyScoreOrderByDairyScore(String zipCode, Float dairyScore, Pageable pageable);
-    Page<Restaurant> findByZipCodeAndEggScoreOrderByEggScore(String zipCode, Float eggScore, Pageable pageable);
+
+    Page<Restaurant> findByZipCode(String zipcode, Pageable pageable);
+
+    Page<Restaurant> findByZipCodeAndPeanutScoreOrderByPeanutScore(String zipCode, Pageable pageable);
+    Page<Restaurant> findByZipCodeAndDairyScoreOrderByDairyScore(String zipCode, Pageable pageable);
+    Page<Restaurant> findByZipCodeAndEggScoreOrderByEggScore(String zipCode, Pageable pageable);
+
+    Page<Restaurant> findByPeanutScoreOrderByPeanutScore(Pageable pageable);
+    Page<Restaurant> findByDairyScoreOrderByDairyScore(Pageable pageable);
+    Page<Restaurant> findByEggScoreOrderByEggScore(Pageable pageable);
 }

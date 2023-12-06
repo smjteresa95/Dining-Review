@@ -4,6 +4,7 @@ import com.example.diningreview.model.dto.RestaurantDto;
 import com.example.diningreview.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,17 @@ public class RestaurantController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<RestaurantDto>> getAllRestaurant(@RequestParam("page") int page,
-                                                                @RequestParam("size") int size){
+    public ResponseEntity<Page<RestaurantDto>> getAllRestaurant(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                                                @RequestParam(value = "size", required = false, defaultValue = "10") int size){
         return ResponseEntity.ok(service.getAllRestaurant(page, size));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<RestaurantDto>> searchRestaurant(@RequestParam(value = "zipcode", required = false) String zipcode,
+                                                                @RequestParam(value = "allergy", required = false) String allergy,
+                                                                @RequestParam(value="page", required=false, defaultValue = "0") int page,
+                                                                @RequestParam(value="size", required=false, defaultValue = "10") int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.searchRestaurant(zipcode, allergy, pageRequest));
     }
 }

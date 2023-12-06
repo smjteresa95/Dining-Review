@@ -100,7 +100,7 @@ public class RestaurantControllerTest {
     @Test
     public void getAllRestaurantTest() throws Exception {
         int page = 0;
-        int size = 10;
+        int size = 5;
 
         List<RestaurantDto> restaurantDtoList = new ArrayList<>();
         for(int i=0; i<10; i++){
@@ -131,7 +131,43 @@ public class RestaurantControllerTest {
                     .param("size", String.valueOf(size))
         ).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size").value(10))
+                .andExpect(jsonPath("$.size").value(size))
                 .andExpect(jsonPath("$.content[0].name").value("name"));
+    }
+
+    @Test
+    public void searchRestaurantTest() throws Exception {
+        String zipcode = "12345";
+        String allergy = "peanut";
+        int page = 0;
+        int size = 10;
+
+        List<RestaurantDto> restaurantDtoList = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            RestaurantDto restaurantDto = RestaurantDto.builder()
+                    .name("name")
+                    .type(CuisineType.KOREAN)
+                    .address("address")
+                    .state("state")
+                    .zipCode("zipcode")
+                    .phone("123-456-7890")
+                    .website("restaurant.com")
+                    .peanutScore(4.0f)
+                    .dairyScore(2.5f)
+                    .eggScore(5.0f)
+                    .overallScore(4.0f)
+                    .build();
+            restaurantDtoList.add(restaurantDto);
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<RestaurantDto> restaurantDtoPage = new PageImpl<>(restaurantDtoList, pageable, restaurantDtoList.size());
+        when(service.searchRestaurant(zipcode, allergy, pageable)).thenReturn(restaurantDtoPage);
+
+        mockMvc.perform(get("/restaurant/search")
+//                .param("zipcode", zipcode)
+//                .param("allergy", allergy)
+                .param("page", String.valueOf(page))
+                .param("size",String.valueOf(size))).andExpect(status().isOk());
     }
 }

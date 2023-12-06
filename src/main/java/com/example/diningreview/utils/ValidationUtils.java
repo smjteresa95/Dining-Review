@@ -1,9 +1,9 @@
 package com.example.diningreview.utils;
 
-import com.example.diningreview.service.RestaurantService;
 import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 @UtilityClass
 public class ValidationUtils {
@@ -19,16 +19,32 @@ public class ValidationUtils {
     }
 
     //알러지 점수 범위 유효성 검사
-    public static boolean isValidateScore(Float score, String fieldName){
+    public static boolean isInvalidScore(Float score, String fieldName){
         if(score == null){
             LOGGER.error("{} is null", fieldName);
-            return false;
+            return true;
         }
         if(score < 0 || score > 5){
             LOGGER.error("{} is out of range. Must between 0 to 5", fieldName);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isValidZipcode(String zipcode){
+        if(!(zipcode.length() ==5)){
             return false;
         }
-        return true;
+        try{
+             Integer.parseInt(zipcode);
+             return true;
+        } catch (NumberFormatException e){
+            return false;
+        }
+    }
+
+    public static boolean isValidAllergy(String allergy){
+        return allergy.equals("peanut") || allergy.equals("egg") || allergy.equals("dairy");
     }
 
 }
