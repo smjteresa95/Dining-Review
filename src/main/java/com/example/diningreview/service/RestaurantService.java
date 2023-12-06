@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +44,13 @@ public class RestaurantService implements RestaurantServiceInterface{
         allRestaurantsDto = allRestaurantsDto.subList(start, end);
 
         return new PageImpl<>(allRestaurantsDto, pageRequest, allRestaurantsDto.size());
+    }
+
+    @Override
+    public Optional<RestaurantDto> getRestaurantById(long id){
+        Optional<Restaurant> restaurant = repository.findById(id);
+        //optional 의 map 함수를 이용해서 값 추출 후 restaurantToDto 메서드에 전달한다.
+        return restaurant.map(mapper::restaurantToDto);
     }
 
     @Override

@@ -2,11 +2,8 @@ package com.example.diningreview.controller;
 
 import com.example.diningreview.model.dto.RestaurantDto;
 import com.example.diningreview.service.RestaurantService;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
