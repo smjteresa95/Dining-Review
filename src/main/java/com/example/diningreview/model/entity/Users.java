@@ -1,13 +1,14 @@
 package com.example.diningreview.model.entity;
 
+import com.example.diningreview.model.dto.UsersDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "USERS")
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor @Builder
 public class Users {
 
     @Id

@@ -17,7 +17,7 @@ public class RestaurantDto {
     private String address;
     private String city;
     private String state;
-    private String zipCode;
+    private String zipcode;
 
     private String phone;
     private String website;
@@ -34,7 +34,7 @@ public class RestaurantDto {
                 .address(address)
                 .city(city)
                 .state(state)
-                .zipCode(zipCode)
+                .zipcode(zipcode)
                 .phone(phone)
                 .website(website)
                 .peanutScore(peanutScore)

@@ -5,7 +5,6 @@ import com.example.diningreview.model.dto.RestaurantDto;
 import com.example.diningreview.service.RestaurantService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import org.h2.util.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,14 +19,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,7 +63,7 @@ public class RestaurantControllerTest {
                 .type(CuisineType.KOREAN)
                 .address("123 st")
                 .state("VA")
-                .zipCode("12345")
+                .zipcode("12345")
                 .phone("123-456-7890")
                 .website("restaurant.com")
                 .peanutScore(4.0f)
@@ -109,7 +109,7 @@ public class RestaurantControllerTest {
                     .type(CuisineType.KOREAN)
                     .address("address")
                     .state("state")
-                    .zipCode("zipcode")
+                    .zipcode("zipcode")
                     .phone("123-456-7890")
                     .website("restaurant.com")
                     .peanutScore(4.0f)
@@ -138,7 +138,10 @@ public class RestaurantControllerTest {
     @Test
     public void searchRestaurantTest() throws Exception {
         String zipcode = "12345";
-        String allergy = "peanut";
+        Float peanutScore = 4.0f;
+        Float dairyScore = 2.5f;
+        Float eggScore = 5.0f;
+        Float overallScore = 4.0f;
         int page = 0;
         int size = 10;
 
@@ -149,7 +152,7 @@ public class RestaurantControllerTest {
                     .type(CuisineType.KOREAN)
                     .address("address")
                     .state("state")
-                    .zipCode("zipcode")
+                    .zipcode("zipcode")
                     .phone("123-456-7890")
                     .website("restaurant.com")
                     .peanutScore(4.0f)
@@ -162,12 +165,17 @@ public class RestaurantControllerTest {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<RestaurantDto> restaurantDtoPage = new PageImpl<>(restaurantDtoList, pageable, restaurantDtoList.size());
-        when(service.searchRestaurant(zipcode, allergy, pageable)).thenReturn(restaurantDtoPage);
+        when(service.searchRestaurant(zipcode, peanutScore, eggScore, dairyScore, overallScore, pageable))
+                .thenReturn(restaurantDtoPage);
 
         mockMvc.perform(get("/restaurant/search")
-//                .param("zipcode", zipcode)
-//                .param("allergy", allergy)
-                .param("page", String.valueOf(page))
-                .param("size",String.valueOf(size))).andExpect(status().isOk());
+                .param("zipcode", zipcode)
+                .param("peanutScore", String.valueOf(4.0f))
+//                .param("eggScore", String.valueOf())
+//                .param("dairyScore", String.valueOf())
+//                .param("overallScore", String.valueOf())
+//                .param("page", String.valueOf(page))
+                .param("size",String.valueOf(size))
+                ).andExpect(status().isOk());
     }
 }

@@ -33,10 +33,13 @@ public class RestaurantController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<RestaurantDto>> searchRestaurant(@RequestParam(value = "zipcode", required = false) String zipcode,
-                                                                @RequestParam(value = "allergy", required = false) String allergy,
+                                                                @RequestParam(value = "peanutScore", required = false) Float peanutScore,
+                                                                @RequestParam(value = "eggScore", required = false) Float eggScore,
+                                                                @RequestParam(value = "dairyScore", required = false) Float dairyScore,
+                                                                @RequestParam(value = "overallScore", required = false) Float overallScore,
                                                                 @RequestParam(value="page", required=false, defaultValue = "0") int page,
                                                                 @RequestParam(value="size", required=false, defaultValue = "10") int size){
         PageRequest pageRequest = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchRestaurant(zipcode, allergy, pageRequest));
+        return ResponseEntity.ok(service.searchRestaurant(zipcode, peanutScore, eggScore, dairyScore, overallScore, pageRequest));
     }
 }

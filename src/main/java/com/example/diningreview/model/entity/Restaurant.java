@@ -24,7 +24,7 @@ public class Restaurant {
     private String address;
     private String city;
     private String state;
-    private String zipCode;
+    private String zipcode;
 
     private String phone;
     private String website;

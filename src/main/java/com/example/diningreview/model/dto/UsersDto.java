@@ -1,5 +1,6 @@
 package com.example.diningreview.model.dto;
 
+import com.example.diningreview.model.entity.Users;
 import lombok.*;
 
 @Getter
@@ -17,4 +18,16 @@ public class UsersDto {
     private Boolean hasPeanutAllergies;
     private Boolean hasEggAllergies;
     private Boolean hasDairyAllergies;
+
+    public Users toEntity(){
+        return Users.builder()
+                .name(name)
+                .city(city)
+                .state(state)
+                .zipcode(zipcode)
+                .hasPeanutAllergies(hasPeanutAllergies)
+                .hasDairyAllergies(hasDairyAllergies)
+                .hasEggAllergies(hasEggAllergies)
+                .build();
+    }
 }

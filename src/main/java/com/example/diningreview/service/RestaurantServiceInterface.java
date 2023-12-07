@@ -11,6 +11,10 @@ public interface RestaurantServiceInterface {
     public Boolean validateRestaurant(RestaurantDto dto);
     public Page<RestaurantDto> getAllRestaurant(int page, int size);
     public Optional<RestaurantDto> getRestaurantById(long id);
-    public Page<RestaurantDto> searchRestaurant(String zipCode, String allergy, Pageable pageable);
-
+    public Page<RestaurantDto> searchRestaurant(String zipcode,
+                                                Float peanutScore,
+                                                Float eggScore,
+                                                Float dairyScore,
+                                                Float overallScore,
+                                                Pageable pageable);
 }

@@ -51,69 +51,33 @@ public class RestaurantService implements RestaurantServiceInterface{
     }
 
     @Override
-    //zipcode, allergy 가 인자로 주어질 수도, 아예 주어지지 않을 수도 있다.
-    public Page<RestaurantDto> searchRestaurant(String zipcode, String allergy, Pageable pageable){
+    public Page<RestaurantDto> searchRestaurant(String zipcode,
+                                                Float peanutScore,
+                                                Float eggScore,
+                                                Float dairyScore,
+                                                Float overallScore,
+                                                Pageable pageable){
 
+        //지정해 준 allergyScore 보다 높은 레스토랑 얻어오기.
         if(!ValidationUtils.isValidZipcode(zipcode)){
             throw new IllegalArgumentException("Invalid zipcode");
         }
 
-        if(ValidationUtils.isValidAllergy(allergy.toLowerCase())){
-            throw new IllegalArgumentException("Invalid allergy");
+        if(ValidationUtils.isInvalidScore(peanutScore, "peanutScore") ||
+                ValidationUtils.isInvalidScore(eggScore, "eggScore") ||
+                ValidationUtils.isInvalidScore(dairyScore, "dairyScore")){
+            throw new IllegalArgumentException("Invalid allergy score arg");
         }
 
         Page<Restaurant> restaurants;
-
-        //zipcode, allergy 둘 다 있는 경우
-        if(!zipcode.isBlank() && !allergy.isBlank()){
-            restaurants = getRestaurantByZipcodeAndAllergy(zipcode, allergy, pageable);
-        }
-        //zipcode 없고, allergy 있는 경우
-        else if (zipcode.isBlank() && !allergy.isBlank()) {
-            restaurants = getRestaurantByAllergy(allergy, pageable);
-        }
-        //zipcode 있고, allergy 없는 경우
-        else if (!zipcode.isBlank()) {
-            restaurants = repository.findByZipCode(zipcode, pageable);
-        }
-        //둘 다 없는 경우는 모든 레스토랑 반환
-        else {
-            restaurants = repository.findAll(pageable);
-        }
+        restaurants = repository.findByZipcodeAndScores(zipcode, peanutScore, eggScore, dairyScore, overallScore);
 
         List<RestaurantDto> restaurantDtoList = new ArrayList<>();
-
         for(Restaurant restaurant:restaurants){
             restaurantDtoList.add(mapper.restaurantToDto(restaurant));
         }
 
         return new PageImpl<>(restaurantDtoList, pageable,restaurants.getSize());
-    }
-
-    public Page<Restaurant> getRestaurantByZipcodeAndAllergy(String zipcode, String allergy, Pageable pageable){
-        switch (allergy){
-            case "peanut":
-                return repository.findByZipCodeAndPeanutScoreOrderByPeanutScore(zipcode, pageable);
-            case "egg":
-                return repository.findByZipCodeAndEggScoreOrderByEggScore(zipcode, pageable);
-            case "dairy":
-                return repository.findByZipCodeAndDairyScoreOrderByDairyScore(zipcode, pageable);
-            default:
-                throw new NoSuchElementException("Unable to find a restaurant that meets the desired criteria; zipcode, allergy");
-        }
-    }
-
-    public Page<Restaurant> getRestaurantByAllergy(String allergy, Pageable pageable){
-        switch (allergy){
-            case "peanut":
-                return repository.findByPeanutScoreOrderByPeanutScore(pageable);
-            case "egg":
-                return repository.findByEggScoreOrderByEggScore(pageable);
-            case "dairy":
-                return repository.findByDairyScoreOrderByDairyScore(pageable);
-            default:
-                throw new NoSuchElementException("Unable to find a restaurant that meets the desired criteria; allergy");
-        }
     }
 
     @Override
@@ -132,7 +96,7 @@ public class RestaurantService implements RestaurantServiceInterface{
         if (ValidationUtils.isNull(dto.getCity(), "city")) {
             return false;
         }
-        if (ValidationUtils.isNull(dto.getZipCode(), "zipcode")) {
+        if (ValidationUtils.isNull(dto.getZipcode(), "zipcode")) {
             return false;
         }
         if (ValidationUtils.isNull(dto.getPhone(), "restaurant phone number")) {
