@@ -13,11 +13,8 @@ import java.util.Set;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
-    Optional<Restaurant> findByNameAndZipCode(String name, String Zipcode);
+//    Optional<Restaurant> findByNameAndZipCode(String name, String Zipcode);
     Page<Restaurant> findAll(Pageable pageable);
-
-
-    Page<Restaurant> findByZipCode(String zipcode, Pageable pageable);
 
     //null인 경우 쿼리에서 무시되고, 인자가 제공된 경우에만 필터링 조건으로 사용한다.
     @Query("SELECT r FROM Restaurant r WHERE " +
@@ -31,6 +28,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
                                             @Param("peanutScore") Float peanutScore,
                                             @Param("eggScore") Float eggScore,
                                             @Param("dairyScore") Float dairyScore,
-                                            @Param("overallScore") Float overallScore);
+                                            @Param("overallScore") Float overallScore,
+                                            Pageable pageable);
 
 }

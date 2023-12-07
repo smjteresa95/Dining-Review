@@ -70,14 +70,14 @@ public class RestaurantService implements RestaurantServiceInterface{
         }
 
         Page<Restaurant> restaurants;
-        restaurants = repository.findByZipcodeAndScores(zipcode, peanutScore, eggScore, dairyScore, overallScore);
+        restaurants = repository.findByZipcodeAndScores(zipcode, peanutScore, eggScore, dairyScore, overallScore, pageable);
 
         List<RestaurantDto> restaurantDtoList = new ArrayList<>();
         for(Restaurant restaurant:restaurants){
             restaurantDtoList.add(mapper.restaurantToDto(restaurant));
         }
 
-        return new PageImpl<>(restaurantDtoList, pageable,restaurants.getSize());
+        return new PageImpl<>(restaurantDtoList, pageable, restaurants.getSize());
     }
 
     @Override
